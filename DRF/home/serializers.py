@@ -12,7 +12,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 
-
 class UserRegisterSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(style={'input_type':'password'},write_only=True)
     class Meta:

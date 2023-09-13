@@ -36,6 +36,9 @@ class UserRegisterView(APIView):
 
 
 class UserLoginView(APIView):
+    def get(self,request):
+        return Response({"msg":"please login with your email and password"})
+
     def post(self,request,format=None):
         serializer = UserLoginSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -56,7 +59,9 @@ class UserLoginView(APIView):
 
 
 
-
+class UserProfileView(APIView):
+    def get(self,request):
+        pass
 
         
 
