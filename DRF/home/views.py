@@ -1,7 +1,7 @@
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from . serializers import UserSerializer,UserRegisterSerializer,UserLoginSerializer
+from . serializers import UserSerializer,UserRegisterSerializer,UserLoginSerializer,ProfileSerializer
 from . models import MyUser
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from . tokens import get_tokens_for_user
@@ -45,10 +45,7 @@ class UserLoginView(APIView):
             email = serializer.validated_data.get('email')
             password = serializer.validated_data.get('password')
             print(email,password)
-            try:
-                user = MyUser.objects.get(email=email)
-            except MyUser.DoesNotExist:
-                user = None
+            user = authenticate(email=email,password=password)
             print(user)
             if user is not None and check_password(password, user.password):
                 token = get_tokens_for_user(user)
@@ -60,8 +57,13 @@ class UserLoginView(APIView):
 
 
 class UserProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+    
     def get(self,request):
-        pass
+        user = request.user
+        serializer = ProfileSerializer(user)
+        return Response(serializer.data)
+        
 
         
 

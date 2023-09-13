@@ -1,4 +1,4 @@
-from . models import MyUser
+from . models import MyUser,UserProfile
 from rest_framework import serializers
 from rest_framework.validators import ValidationError
 from django.contrib.auth.hashers import make_password
@@ -33,10 +33,18 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         return data
     
 
-    
 
 class UserLoginSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField()
     class Meta:
         model = MyUser
         fields = ['email','password']
+
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = UserProfile
+        fields = ['user','profile','age','phone']  
 
