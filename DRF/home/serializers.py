@@ -1,4 +1,4 @@
-from . models import User
+from . models import MyUser
 from rest_framework import serializers
 from rest_framework.validators import ValidationError
 from django.contrib.auth.hashers import make_password
@@ -7,40 +7,37 @@ from django.contrib.auth.hashers import make_password
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
+        model = MyUser
         fields = ['id','email','username','password']
 
 
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):
-    password2 = serializers.CharField()
+    password2 = serializers.CharField(style={'input_type':'password'},write_only=True)
     class Meta:
-        model = User
-        fields = ['email','password','username','password2']
+        model = MyUser
+        fields = ['email','username','password','password2']
 
-    def validate(self,validate_data):
-        email = validate_data.get('email')
-        password = validate_data.get('password')
-        password2 = validate_data.get('password2')
+    def validate(self,data):
+        email = data.get('email')
+        password = data.get('password')
+        password2 = data.get('password2')
+        print(password2,password)
 
-        if User.objects.filter(email=email).exists():
+        if MyUser.objects.filter(email=email).exists():
             raise ValidationError('email is alredy exist')
-        
+        print(email)
         if password != password2:
             raise ValidationError("password dosn't mach")
-
-        return validate_data
+        print(password,password2)
+        return data
     
 
-    # def create(self, validated_data):
-    #     # Hash the password before saving it to the database
-    #     password = validated_data.get('password')
-    #     user = User.objects.create_user(**validated_data, password=password)  
-    #     return user
+    
 
-    # def create(self, data):
-    #     password = data.get('password')
-    #     user = User.objects.create_user(**data, password=password)
-    #     return user
+class UserLoginSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MyUser
+        fields = ['email','password']
 

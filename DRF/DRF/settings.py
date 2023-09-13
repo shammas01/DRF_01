@@ -129,7 +129,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # New updates
 
-AUTH_USER_MODEL = 'home.User'
+AUTH_USER_MODEL = 'home.MyUser'
 
 REST_FRAMEWORK = {
     
