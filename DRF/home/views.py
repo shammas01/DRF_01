@@ -58,17 +58,30 @@ class UserLoginView(APIView):
 
 class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        
+
+        serializer = userprofilemodelserializer(data=request.data)
+        if serializer.is_valid():
+                UserProfile.objects.create(
+                user=request.user,
+                age = serializer.validated_data['age'],
+                profile = serializer.validated_data['profile'],
+                phone = serializer.validated_data['phone']
+            )
+            
+                return Response({"msg":"your profile success fully added"})
+        return Response(serializer.errors)
+
+   
+
     def get(self,request):
         user = UserProfile.objects.filter(user_id=request.user.id).first()
-        try:
-            if user is not None:
-                serializer = userprofilemodelserializer(user)
-                return Response(serializer.data,status=status.HTTP_200_OK)
-        except: 
-            ValueError("user not found")
-
-        finally:
-            ('your user profile is here')  
+        if user is not None:
+            serializer = userprofilemodelserializer(user)
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        
         
         
         

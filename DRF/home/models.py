@@ -21,5 +21,5 @@ class UserProfile(models.Model):
     phone = models.CharField(max_length=10)
 
     def __str__(self) -> str:
-        return str(self.phone)
+        return str(self.user.email)
    

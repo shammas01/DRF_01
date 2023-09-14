@@ -43,16 +43,17 @@ class UserLoginSerializer(serializers.ModelSerializer):
 
 
 
-
-
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = MyUser
         fields = ['email','username']  
 
 
+
 class userprofilemodelserializer(serializers.ModelSerializer):
-    user = ProfileSerializer()
+    user = ProfileSerializer(required = False)
     class Meta:
         model = UserProfile
-        fields = '__all__'
+        fields =['profile','age','phone','user']
+
+    
