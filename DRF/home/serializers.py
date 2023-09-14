@@ -42,9 +42,17 @@ class UserLoginSerializer(serializers.ModelSerializer):
 
 
 
+
+
+
 class ProfileSerializer(serializers.ModelSerializer):
-    
+    class Meta:
+        model = MyUser
+        fields = ['email','username']  
+
+
+class userprofilemodelserializer(serializers.ModelSerializer):
+    user = ProfileSerializer()
     class Meta:
         model = UserProfile
-        fields = ['user','profile','age','phone']  
-
+        fields = '__all__'

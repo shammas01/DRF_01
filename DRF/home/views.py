@@ -1,8 +1,8 @@
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from . serializers import UserSerializer,UserRegisterSerializer,UserLoginSerializer,ProfileSerializer
-from . models import MyUser
+from . serializers import UserSerializer,UserRegisterSerializer,UserLoginSerializer,ProfileSerializer,userprofilemodelserializer
+from . models import MyUser,UserProfile
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from . tokens import get_tokens_for_user
 from rest_framework.authentication import authenticate
@@ -58,11 +58,20 @@ class UserLoginView(APIView):
 
 class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
-    
     def get(self,request):
-        user = request.user
-        serializer = ProfileSerializer(user)
-        return Response(serializer.data)
+        user = UserProfile.objects.filter(user_id=request.user.id).first()
+        try:
+            if user is not None:
+                serializer = userprofilemodelserializer(user)
+                return Response(serializer.data,status=status.HTTP_200_OK)
+        except: 
+            ValueError("user not found")
+
+        finally:
+            ('your user profile is here')  
+        
+        
+        
         
 
         
