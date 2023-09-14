@@ -2,6 +2,7 @@ from . models import MyUser,UserProfile
 from rest_framework import serializers
 from rest_framework.validators import ValidationError
 from django.contrib.auth.hashers import make_password
+from rest_framework.response import Response 
 
 
 
@@ -56,4 +57,8 @@ class userprofilemodelserializer(serializers.ModelSerializer):
         model = UserProfile
         fields =['profile','age','phone','user']
 
-    
+        # def validate(self,data,request):
+        #     if UserProfile.objects.filter(user=request.user).exists():
+        #         return Response({"msg":"your profiel is alredy exist"})
+
+        #     return Response()

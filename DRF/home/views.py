@@ -60,18 +60,18 @@ class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        
-
         serializer = userprofilemodelserializer(data=request.data)
+        
         if serializer.is_valid():
+            if not UserProfile.objects.filter(user=request.user).exists():    
                 UserProfile.objects.create(
                 user=request.user,
                 age = serializer.validated_data['age'],
                 profile = serializer.validated_data['profile'],
                 phone = serializer.validated_data['phone']
-            )
-            
+            )       
                 return Response({"msg":"your profile success fully added"})
+            return Response({"msg":"your profile is alredy adedd!"})
         return Response(serializer.errors)
 
    
