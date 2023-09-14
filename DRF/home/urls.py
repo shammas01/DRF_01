@@ -11,6 +11,7 @@ urlpatterns = [
     path('', UserRegisterView.as_view()),
     path('login/',UserLoginView.as_view()),
     path('profile/',UserProfileView.as_view()),
+    path('profile/edit/',UserProfileView.as_view()),
 
     #simple JWT documentation
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),

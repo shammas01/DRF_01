@@ -60,8 +60,7 @@ class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        serializer = userprofilemodelserializer(data=request.data)
-        
+        serializer = userprofilemodelserializer(data=request.data)       
         if serializer.is_valid():
             if not UserProfile.objects.filter(user=request.user).exists():    
                 UserProfile.objects.create(
@@ -70,8 +69,8 @@ class UserProfileView(APIView):
                 profile = serializer.validated_data['profile'],
                 phone = serializer.validated_data['phone']
             )       
-                return Response({"msg":"your profile success fully added"})
-            return Response({"msg":"your profile is alredy adedd!"})
+                return Response({"msg":"your profile success fully added"},status=status.HTTP_200_OK)
+            return Response({"msg":"your profile is already adedd!"},status=status.HTTP_409_CONFLICT)
         return Response(serializer.errors)
 
    
@@ -83,8 +82,26 @@ class UserProfileView(APIView):
             return Response(serializer.data,status=status.HTTP_200_OK)
         
         
-        
-        
+    def put(self,request):
+        user = request.user
+        serializer = userprofilemodelserializer(user,data=request.data)
+        if serializer.is_valid():
+            
+            UserProfile.objects.update(
+                age = serializer.validated_data['age'],
+                profile = serializer.validated_data['profile'],
+                phone = serializer.validated_data['phone']
+            )
+            
+            return Response({"msg":"your profile is Updated"},status=status.HTTP_200_OK)
+        return Response(serializer.errors)
+
+
+    def delete(self,request):
+        data = UserProfile.objects.get(user = request.user)
+        print(data)
+        data.delete()
+        return Response({"msg":"your profile is deleted"},status=status.HTTP_200_OK)
         
 
         
