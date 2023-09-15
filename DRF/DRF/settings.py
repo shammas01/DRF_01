@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'home',
     'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 MIDDLEWARE = [
@@ -173,6 +174,11 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
     "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
+    #new
+    'SLIDING_TOKEN_REFRESH_LIFETIME_SLIDING': True,
+    'SLIDING_TOKEN_LIFETIME_GRACE_PERIOD_SLIDING': True,
+    'SLIDING_TOKEN_REFRESH_LIFETIME_CREATE': True,
+    'SLIDING_TOKEN_REFRESH_LIFETIME_GRACE_PERIOD': timedelta(days=0),
 
     "TOKEN_OBTAIN_SERIALIZER": "rest_framework_simplejwt.serializers.TokenObtainPairSerializer",
     "TOKEN_REFRESH_SERIALIZER": "rest_framework_simplejwt.serializers.TokenRefreshSerializer",

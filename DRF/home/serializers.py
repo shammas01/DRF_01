@@ -57,7 +57,7 @@ class userprofilemodelserializer(serializers.ModelSerializer):
         fields =['profile','age','phone','user']
 
         # def validate(self,data,request):
-        #     if UserProfile.objects.filter(user=request.user).exists():
+        #     if not UserProfile.objects.filter(user=request.user).exists():
         #         return Response({"msg":"your profiel is alredy exist"})
 
         #     return Response()
