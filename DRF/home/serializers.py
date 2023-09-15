@@ -3,8 +3,7 @@ from rest_framework import serializers
 from rest_framework.validators import ValidationError
 from django.contrib.auth.hashers import make_password
 from rest_framework.response import Response 
-
-
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

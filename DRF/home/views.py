@@ -60,6 +60,7 @@ class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
+        print(request.data)
         serializer = userprofilemodelserializer(data=request.data)       
         if serializer.is_valid():
             if not UserProfile.objects.filter(user=request.user).exists():    
