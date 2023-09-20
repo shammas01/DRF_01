@@ -57,7 +57,7 @@ class UserLoginView(APIView):
 
 
 class UserProfileView(APIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def post(self, request):
         
@@ -77,10 +77,12 @@ class UserProfileView(APIView):
    
 
     def get(self,request):
-        user = UserProfile.objects.filter(user_id=request.user.id).first()
+        # user = UserProfile.objects.filter(user_id=request.user.id).first()
+        user = MyUser.objects.all()
         if user is not None:
-            serializer = userprofilemodelserializer(user)
+            serializer = userprofilemodelserializer(user,many=True)
             return Response(serializer.data,status=status.HTTP_200_OK)
+        return Response()
         
         
     def put(self,request):
@@ -106,6 +108,7 @@ class UserProfileView(APIView):
         
 
 
+
 from rest_framework_simplejwt.tokens import RefreshToken
 class UserLogoutView(APIView):
     permission_classes = [IsAuthenticated]
@@ -113,7 +116,6 @@ class UserLogoutView(APIView):
     def post(self, request):
         refresh_token = request.data.get('refresh_token')
         print(refresh_token)
-
         if not refresh_token:
             return Response({'error': 'Refresh token is required.'}, status=status.HTTP_400_BAD_REQUEST)
 

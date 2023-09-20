@@ -1,4 +1,4 @@
-from . models import MyUser,UserProfile
+from . models import MyUser,UserProfile,Shammas
 from rest_framework import serializers
 from rest_framework.validators import ValidationError
 from django.contrib.auth.hashers import make_password
@@ -39,21 +39,22 @@ class UserLoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = MyUser
         fields = ['email','password']
-
+ 
 
 
 
 class ProfileSerializer(serializers.ModelSerializer):
+    shammas = shammasSerializer(many=True)
     class Meta:
-        model = MyUser
-        fields = ['email','username']  
+        model = UserProfile
+        fields =['phone','age','shammas'] 
 
 
 
 class userprofilemodelserializer(serializers.ModelSerializer):
-    user = ProfileSerializer(required = False)
+    userprofile = ProfileSerializer(many=True)
     class Meta:
-        model = UserProfile
-        fields =['profile','age','phone','user']
-
+        model = MyUser   
+        fields =['email','username','userprofile']
+     
         
