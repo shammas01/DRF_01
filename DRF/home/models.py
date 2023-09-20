@@ -32,5 +32,8 @@ class UserProfile(models.Model):
     
 
 
-
+class Shammas(models.Model):
+    name = models.CharField(max_length=100,null=True,blank=True)
+    city = models.CharField(max_length=100,null=True,blank=True)
+    profileuser = models.ForeignKey(UserProfile,on_delete=models.CASCADE,null=True,blank=True)
    

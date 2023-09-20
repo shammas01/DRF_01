@@ -39,7 +39,15 @@ class UserLoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = MyUser
         fields = ['email','password']
- 
+
+
+
+
+
+class shammasSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Shammas
+        fields ='__all__'  
 
 
 
